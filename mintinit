@@ -1,0 +1,17 @@
+
+echo "*****************************"
+echo "Updating System"
+echo "*****************************"
+sudo apt-get update
+sudo apt-get -f install
+
+
+echo "*****************************"
+echo "Mounting /home to MicroSD"
+echo "*****************************"
+echo "UUID=ff539484-af95-440b-89c7-1b68b72c5f5b   /home    ext3          defaults       0       2" | sudo tee --append /etc/fstab
+sudo mount -a
+
+
+#sudo wpa_supplicant -Dwext -iwlp1s0 -c/media/dphilip/MICROHOME/scripts/wpa.conf -B && sudo dhclient wlp1s0
+
