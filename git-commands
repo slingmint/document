@@ -1,5 +1,5 @@
 
-// Create a new sandbox
+// Create a new sandbox (see below for alternate version)
 
 git clone git://github.com/slingmint/repo-name
 
@@ -19,7 +19,7 @@ git remote push ms master
 
 ----
 
-alternatively:
+(altern alternate version):
 
 git clone https://github.com/slingmint/repo-name.git
 git push origin master
