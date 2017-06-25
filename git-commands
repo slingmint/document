@@ -1,0 +1,27 @@
+
+// Create a new sandbox
+
+git clone git://github.com/slingmint/repo-name
+
+
+// Commit changes locally
+
+git commit -a       //note that -a automatically performs a git add, which is needed)
+
+// When cloning from git://, need to setup remote point for https:, as in follows:
+
+git remote -v       // shows the remote points, add a new one to prompt for user/pwd
+
+git remote add ms https://github.com/slingmint/repo-name.git    // "ms" here is just an alias
+
+git remote push ms master
+
+
+----
+
+alternatively:
+
+git clone https://github.com/slingmint/repo-name.git
+git push origin master
+git push origin mylocalbranch:nameofbranchtocreateonserver     //when using branch
+
