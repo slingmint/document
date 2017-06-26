@@ -1,0 +1,66 @@
+after running script, had to do two things to get this thing to work:
+
+
+1. edit the following files: (from http://c-nergy.be/blog/?p=8316)
+
+xrdp.service file
+The xrdp.service file should contain the following information.  copy/paste the text below into the /lib/systemd/system/xrdp.service file and save it.  You need to use sudo command in order to be able to modify this file.((i.e. sudo gedit /lib/systemd/system/xrdp.service)
+
+[Unit]
+Description=xrdp daemon
+Requires=xrdp-sesman.service
+After=syslog.target network.target xrdp-sesman.service
+
+[Service]
+Type=forking
+PIDFile=/var/run/xrdp.pid
+#EnvironmentFile=/etc/sysconfig/xrdp
+ExecStart=/usr/local/sbin/xrdp $XRDP_OPTIONS
+ExecStop=/usr/local/sbin/xrdp $XRDP_OPTIONS –kill
+
+[Install]
+WantedBy=multi-user.target
+
+ 
+xrdp-sesman.service file
+The xrdp-sesman.service file should look like the one below.  Copy/paste the text below into the /lib/systemd/system/xrdp-sesman.service file and save it.  You need to use sudo command in order to be able to modify this file. (i.e. sudo gedit /lib/systemd/system/xrdp-sesman.service)
+
+[Unit]
+Description=xrdp session manager
+After=syslog.target network.target
+StopWhenUnneeded=true
+
+[Service]
+Type=forking
+PIDFile=/var/run/xrdp-sesman.pid
+#EnvironmentFile=/etc/sysconfig/xrdp
+ExecStart=/usr/sbin/xrdp-sesman $SESMAN_OPTIONS
+ExecStop=/usr/sbin/xrdp-sesman $SESMAN_OPTIONS –kill
+
+[Install]
+WantedBy=multi-user.target
+ 
+
+Using systemctl to apply changes
+The final step here is to issue the following command because we have modified the service units files of XRDP.  Systemd needs to know about these changes.  From a Terminal session, you will issue the following command
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable xrdp.service
+ 
+
+Reboot your system and check that the xrdp service is starting properly.  If this is the case, you should be able to perform an xrdp connection and you are back on track.
+
+
+
+
+
+-----------------------------------
+2. for MATE desktop (which I'm using), need to add an .xsession file in the HOME directory (per http://c-nergy.be/blog/?p=5382):
+
+echo mate-session> ~/.xsession
+
+and then restart the xrdp service by issuing the following commandsudo service xrdp restart
+
+
+
